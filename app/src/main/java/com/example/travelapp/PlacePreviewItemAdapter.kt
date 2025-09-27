@@ -1,5 +1,6 @@
 package com.example.travelapp
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class PlacePreviewItemAdapter(private val data: List<Place>) :
+class PlacePreviewItemAdapter(
+    private val data: List<Place>,
+    private val onItemClick: (Place) -> Unit
+) :
     RecyclerView.Adapter<PlacePreviewItemAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,7 +24,7 @@ class PlacePreviewItemAdapter(private val data: List<Place>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(data[position], { onItemClick(data[position]) })
     }
 
     override fun getItemCount(): Int = data.size
@@ -32,10 +36,14 @@ class PlacePreviewItemAdapter(private val data: List<Place>) :
         private var descriptionTextView: TextView =
             itemView.findViewById(R.id.text_view_place_description)
 
-        fun bind(place: Place) {
+        fun bind(place: Place, onItemClick: (Place) -> Unit) {
             placeImageImageView.setImageResource(place.imageId)
             cityNameTextView.text = place.name
             descriptionTextView.text = place.shortDescription
+
+            itemView.setOnClickListener {
+                onItemClick(place)
+            }
         }
     }
 }
