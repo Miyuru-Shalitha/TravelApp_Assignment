@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#122117"
+    tools:context=".LogInActivity">
+
+    <EditText
+        android:id="@+id/edit_text_email"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Email"
+        app:layout_constraintBottom_toTopOf="@id/edit_text_password"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/edit_text_password"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Password"
+        app:layout_constraintBottom_toTopOf="@id/text_view_forgot_password"
+        app:layout_constraintLeft_toLeftOf="@id/edit_text_email"
+        app:layout_constraintRight_toRightOf="@id/edit_text_email"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_email" />
+
+
+    <TextView
+        android:id="@+id/text_view_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Forgot Password?"
+        android:textColor="@color/tertiary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_log_in"
+        app:layout_constraintLeft_toLeftOf="@id/edit_text_password"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_password" />
+
+    <TextView
+        android:id="@+id/text_view_click_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Click Here"
+        android:textColor="@color/tertiary"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_forgot_password"
+        app:layout_constraintLeft_toRightOf="@id/text_view_forgot_password"
+        app:layout_constraintTop_toTopOf="@id/text_view_forgot_password" />
+
+    <Button
+        android:id="@+id/button_log_in"
+        style="@style/ButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Log In"
+        app:layout_constraintBottom_toTopOf="@id/text_view_don_t_have_an_account"
+        app:layout_constraintLeft_toLeftOf="@id/edit_text_email"
+        app:layout_constraintRight_toRightOf="@id/edit_text_email"
+        app:layout_constraintTop_toBottomOf="@id/text_view_forgot_password" />
+
+    <TextView
+        android:id="@+id/text_view_don_t_have_an_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account?"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="@id/edit_text_email"
+        app:layout_constraintRight_toLeftOf="@id/text_view_sign_up"
+        app:layout_constraintTop_toBottomOf="@id/button_log_in" />
+
+    <TextView
+        android:id="@+id/text_view_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Sign Up"
+        android:textColor="@color/tertiary"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_don_t_have_an_account"
+        app:layout_constraintLeft_toRightOf="@id/text_view_don_t_have_an_account"
+        app:layout_constraintRight_toRightOf="@id/edit_text_email"
+        app:layout_constraintTop_toTopOf="@id/text_view_don_t_have_an_account" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
