@@ -5,8 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import org.jetbrains.annotations.Async.Execute
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,9 +55,31 @@ class TripPlannerFragment : Fragment() {
         tripPlannerRecyclerView = view.findViewById(R.id.recycler_view_trip_point_container)
         tripPlannerRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        fetchTripPoints()
+    }
 
-        val data = listOf("POINT 1", "POINT 2", "POINT 3")
-        tripPlannerRecyclerView.adapter = TripPointItemAdapter(data)
+    fun fetchTripPoints() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser != null) {
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val snapshot = FirebaseFirestore.getInstance().collection("users")
+                        .document(currentUser.uid)
+                        .collection("destinations").get().await()
+
+                    val destinationList = snapshot.documents.mapNotNull { doc ->
+                        val destination = doc.getString("destination") ?: return@mapNotNull null
+                        destination
+                    }
+
+                    tripPlannerRecyclerView.adapter =
+                        TripPointItemAdapter(destinationList, { fetchTripPoints() })
+                } catch (err: Exception) {
+//                    Toast(context, "", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     companion object {

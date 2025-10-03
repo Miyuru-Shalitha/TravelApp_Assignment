@@ -1,12 +1,18 @@
 package com.example.travelapp
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.tasks.await
 
 class PlaceInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +34,7 @@ class PlaceInfoActivity : AppCompatActivity() {
         val nameTextView = findViewById<TextView>(R.id.text_view_place_name)
         val reviewStarsTextView = findViewById<TextView>(R.id.text_view_place_review_stars)
         val descriptionTextView = findViewById<TextView>(R.id.text_view_place_description)
+        val addToDestinationButton = findViewById<Button>(R.id.button_add_to_destination)
 
         if (imageId != null) {
             placeImageImageView.setImageResource(imageId)
@@ -35,5 +42,27 @@ class PlaceInfoActivity : AppCompatActivity() {
 
         nameTextView.text = name
         descriptionTextView.text = description
+
+        addToDestinationButton.setOnClickListener {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+
+            if (currentUser != null) {
+                val newDestination = hashMapOf(
+                    "destination" to name
+                )
+
+                FirebaseFirestore.getInstance().collection("users")
+                    .document(currentUser.uid)
+                    .collection("destinations").add(newDestination)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Destination saved successfully!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Destination failed!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            }
+        }
     }
 }

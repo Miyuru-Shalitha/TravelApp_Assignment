@@ -40,4 +40,14 @@
         app:layout_constraintLeft_toLeftOf="@id/text_view_trip_point_title"
         app:layout_constraintTop_toBottomOf="@id/text_view_trip_point_title" />
 
+    <ImageView
+        android:id="@+id/image_view_delete_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
